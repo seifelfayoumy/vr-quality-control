@@ -36,6 +36,8 @@ public class ConveyorSpeedManager : MonoBehaviour
 
     private void ReduceConveyorSpeed()
     {
+        Debug.Log("Reducing Speed");
+
         GameObject[] bolts = GameObject.FindGameObjectsWithTag("Bolt"); 
         foreach (GameObject bolt in bolts)
         {
