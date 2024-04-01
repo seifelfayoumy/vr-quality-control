@@ -13,6 +13,8 @@ public class BoltSpawner : MonoBehaviour
 
     public static float currentConveyorSpeed; 
     private float originalConveyorSpeed;
+
+    public Boolean gameOn = false;
     void Start()
     {
         
@@ -25,23 +27,47 @@ public class BoltSpawner : MonoBehaviour
         
     }
 
+    public void startGameEasy()
+    {
+        gameOn = true;
+        currentConveyorSpeed = 0.6f;
+    }
+    
+    public void startGameMedium()
+    {
+        gameOn = true;
+        currentConveyorSpeed = 0.8f;
+    }
+    public void startGameHard()
+    {
+        gameOn = true;
+        currentConveyorSpeed = 1.0f;
+    }
+    
+    
+
     void SpawnBolt()
     {
-        GameObject newBolt = Instantiate(boltPrefab, spawnPoint.position, spawnPoint.rotation);
-
-        // Assign a color (with weighted gold chance)
-        float goldChance = 0.2f; // 20% chance of gold
-        bool isGold = Random.value < goldChance; 
-
-        Material boltMaterial = newBolt.GetComponent<MeshRenderer>().material;
-        if (isGold) {
-            boltMaterial.color = new Color(1f, 0.84f, 0f); // Your gold color 
-        } else { 
-            boltMaterial.color = new Color(0.8f, 0.8f, 0.8f); // Example silver color
-        }
+        if (gameOn)
+        {
+            
         
-        newBolt.GetComponent<BoltMovement>().conveyorSpeed = currentConveyorSpeed;
+            GameObject newBolt = Instantiate(boltPrefab, spawnPoint.position, spawnPoint.rotation);
 
+            // Assign a color (with weighted gold chance)
+            float goldChance = 0.2f; // 20% chance of gold
+            bool isGold = Random.value < goldChance; 
+
+            Material boltMaterial = newBolt.GetComponent<MeshRenderer>().material;
+            if (isGold) {
+                boltMaterial.color = new Color(1f, 0.84f, 0f); // Your gold color 
+            } else { 
+                boltMaterial.color = new Color(0.8f, 0.8f, 0.8f); // Example silver color
+            }
+            
+            newBolt.GetComponent<BoltMovement>().conveyorSpeed = currentConveyorSpeed;
+            
+        }
     }
 
 }
