@@ -15,6 +15,11 @@ public class BoltSpawner : MonoBehaviour
     private float originalConveyorSpeed;
 
     public Boolean gameOn = false;
+    
+    public static Boolean doubleBolts = true;
+    public static Boolean tripleBolts = true;
+
+
     void Start()
     {
         
@@ -31,17 +36,23 @@ public class BoltSpawner : MonoBehaviour
     {
         gameOn = true;
         currentConveyorSpeed = 0.6f;
+        doubleBolts = false;
+        tripleBolts = false;
     }
     
     public void startGameMedium()
     {
         gameOn = true;
         currentConveyorSpeed = 0.8f;
+        doubleBolts = true;
+        tripleBolts = false;
     }
     public void startGameHard()
     {
         gameOn = true;
         currentConveyorSpeed = 1.0f;
+        doubleBolts = true;
+        tripleBolts = true;
     }
     
     
@@ -50,9 +61,14 @@ public class BoltSpawner : MonoBehaviour
     {
         if (gameOn)
         {
-            
-        
-            GameObject newBolt = Instantiate(boltPrefab, spawnPoint.position, spawnPoint.rotation);
+
+            Vector3 position1 = new Vector3(spawnPoint.position.x, spawnPoint.position.y, -0.75f);
+            Vector3 position2 = new Vector3(-6.6f, spawnPoint.position.y, -1.2f);
+            Vector3 position3 = new Vector3(-6.9f, spawnPoint.position.y, -0.75f);
+
+
+            GameObject newBolt = Instantiate(boltPrefab, position1, spawnPoint.rotation);
+
 
             // Assign a color (with weighted gold chance)
             float goldChance = 0.2f; // 20% chance of gold
@@ -66,7 +82,46 @@ public class BoltSpawner : MonoBehaviour
             }
             
             newBolt.GetComponent<BoltMovement>().conveyorSpeed = currentConveyorSpeed;
+
+
+            if (doubleBolts)
+            {
+                GameObject newBolt2 = Instantiate(boltPrefab, position2, spawnPoint.rotation);
+
+                float goldChance2 = 0.2f; // 20% chance of gold
+
+                bool isGold2 = Random.value < goldChance2; 
+
+                Material boltMaterial2 = newBolt2.GetComponent<MeshRenderer>().material;
+                if (isGold2) {
+                    boltMaterial2.color = new Color(1f, 0.84f, 0f); // Your gold color 
+                } else { 
+                    boltMaterial2.color = new Color(0.8f, 0.8f, 0.8f); // Example silver color
+                }
+                
+                newBolt2.GetComponent<BoltMovement>().conveyorSpeed = currentConveyorSpeed;
+
+            }
             
+            if (tripleBolts)
+            {
+                GameObject newBolt3 = Instantiate(boltPrefab, position3, spawnPoint.rotation);
+
+                float goldChance3 = 0.2f; // 20% chance of gold
+
+                bool isGold3 = Random.value < goldChance3; 
+
+                Material boltMaterial2 = newBolt3.GetComponent<MeshRenderer>().material;
+                if (isGold3) {
+                    boltMaterial2.color = new Color(1f, 0.84f, 0f); // Your gold color 
+                } else { 
+                    boltMaterial2.color = new Color(0.8f, 0.8f, 0.8f); // Example silver color
+                }
+                
+                newBolt3.GetComponent<BoltMovement>().conveyorSpeed = currentConveyorSpeed;
+
+            }
+
         }
     }
 
