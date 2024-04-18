@@ -24,7 +24,11 @@ public class ConveyorSpeedManager : MonoBehaviour
     
     private void Update()
     {
-        timeSinceLastError += Time.deltaTime;
+        if(BoltSpawner.gameOn)
+        {
+            timeSinceLastError += Time.deltaTime;
+        }
+
 
         if (timeSinceLastError > 30f)
         {

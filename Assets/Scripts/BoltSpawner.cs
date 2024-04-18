@@ -14,7 +14,7 @@ public class BoltSpawner : MonoBehaviour
     public static float currentConveyorSpeed; 
     private float originalConveyorSpeed;
 
-    public Boolean gameOn = false;
+    public static Boolean gameOn = false;
     
     public static Boolean doubleBolts = true;
     public static Boolean tripleBolts = true;
