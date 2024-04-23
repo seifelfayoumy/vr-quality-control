@@ -32,7 +32,7 @@ public class BoltSpawner : MonoBehaviour
         
     }
 
-    public void startGameEasy()
+    public static void startGameEasy()
     {
         gameOn = true;
         currentConveyorSpeed = 0.6f;
@@ -40,14 +40,14 @@ public class BoltSpawner : MonoBehaviour
         tripleBolts = false;
     }
     
-    public void startGameMedium()
+    public static void startGameMedium()
     {
         gameOn = true;
         currentConveyorSpeed = 0.8f;
         doubleBolts = true;
         tripleBolts = false;
     }
-    public void startGameHard()
+    public static void startGameHard()
     {
         gameOn = true;
         currentConveyorSpeed = 1.0f;
