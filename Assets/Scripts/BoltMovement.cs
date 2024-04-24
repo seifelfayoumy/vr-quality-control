@@ -11,9 +11,10 @@ public class BoltMovement : MonoBehaviour
 
     void Update()
     {
+
         if (onConveyor) 
         {
-            transform.Translate(Vector3.right * conveyorSpeed * Time.deltaTime);
+            transform.position += (Vector3.right * conveyorSpeed * Time.deltaTime);
         }
 
         conveyorSpeed = BoltSpawner.currentConveyorSpeed;
