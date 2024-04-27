@@ -6,7 +6,7 @@
             "id": "4d61e24a-7cf9-4909-befc-5b25e59cf614",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "eye",
                     "type": "PassThrough",
                     "id": "7269231c-1548-446b-9b05-d06ff93184c5",
                     "expectedControlType": "Pose",
@@ -23,7 +23,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "eye",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

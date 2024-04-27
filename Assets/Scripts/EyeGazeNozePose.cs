@@ -1,45 +1,24 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.OpenXR.Input;
+using Pose = UnityEngine.XR.OpenXR.Input.Pose; // Make sure you have this using statement
 
 public class EyeGazeNosePose : MonoBehaviour
 {
-    // Update is called once per frame
+    [SerializeField] private InputActionAsset inputActions; // Assign your asset in the Inspector
+    private InputAction eyeGazePoseAction; 
+
+    void Start()
+    {
+        // Find the correct action based on its name or path
+        eyeGazePoseAction = inputActions.FindAction("eye"); // Replace with your action name
+        eyeGazePoseAction.Enable();
+    }
+    
     void Update()
     {
-        // Eye Gaze
-        TryGetActionData(OpenXRInput.EyeGazeInteraction, out var eyeGazeActionData);
-        if (eyeGazeActionData.active)
-        {
-            Vector3 eyeGazeDirection = eyeGazeActionData.pose.forward;
-            Vector3 eyeGazePosition = eyeGazeActionData.pose.position;
-
-            // Use eyeGazeDirection and eyeGazePosition for your interactions here
-            Debug.Log("Eye Gaze Direction: " + eyeGazeDirection);
-            Debug.Log("Eye Gaze Position: " + eyeGazePosition);
-        }
-
-        // Nose Pose (representing head pose)
-        TryGetActionData(OpenXRInput.HeadPose, out var headPoseActionData);
-        if (headPoseActionData.active)
-        {
-            Vector3 nosePosition = headPoseActionData.pose.position;
-            Quaternion noseRotation = headPoseActionData.pose.rotation;
-
-            // Use nosePosition and noseRotation for your interactions here
-            Debug.Log("Nose Position: " + nosePosition);
-            Debug.Log("Nose Rotation: " + noseRotation);
-        }
+        Pose eyeGazePose = eyeGazePoseAction.ReadValue<Pose>();
+        Debug.Log("Eye Gaze Pose: " + eyeGazePose.position + ", " + eyeGazePose.rotation);
     }
 
-    // Helper function to streamline getting OpenXR action data
-    private bool TryGetActionData<T>(Action<T> action, out T actionData) where T : struct
-    {
-        if (action.enabled && action.TryGetCurrentState(out actionData))
-        {
-            return true;
-        }
-
-        actionData = default;
-        return false;
-    }
 }
