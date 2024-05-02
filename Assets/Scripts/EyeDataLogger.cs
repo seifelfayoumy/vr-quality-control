@@ -1,52 +1,64 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using ViveSR.anipal.Eye;
 
-public class EyeDataLogger : MonoBehaviour
-{
-    private static EyeData_v2 eyeData = new EyeData_v2();
-    private bool eyeCallbackRegistered = false;
+public class EyeDataLogger : MonoBehaviour {
 
-    void Start()
-    {
-        if (!SRanipal_Eye_Framework.Instance.EnableEye)
-         {
-            enabled = false;
-             return;
-         }
-         if (!SRanipal_Eye_Framework.Instance.EnableEyeDataCallback)
-         Debug.LogError("Eye data callback not enabled!");
+    public delegate void eyeCallbackDelegate(EyeData_v2 eyeData);
+
+    public void eyeCallback(EyeData_v2 eyeData) {
+        Debug.Log("GETTING EYE DATA");
     }
 
-    void Update()
-    {
-
-        if (SRanipal_Eye_Framework.Status != SRanipal_Eye_Framework.FrameworkStatus.WORKING)
-            return;
-
-        if (!eyeCallbackRegistered)
+    // Callback function to receive eye data from SRanipal
+    private void OnGazeRay(GazeIndex index, Vector3 origin, Vector3 direction, ref RaycastHit hitInfo, float distance, ref bool focusInfo) {
+        if (index == GazeIndex.COMBINE) // Focus on combined eye data
         {
-            // if (SRanipal_Eye_Framework.Instance.EnableEyeDataCallback &&
-            //     SRanipal_Eye.RegisterEyeDataCallback(Marshal.GetFunctionPointerForDelegate((SRanipal_Eye.CallbackBasic)EyeCallback)))
-            // {
-            //     eyeCallbackRegistered = true;
-            // }
-       
-            //Debug.Log("not registered");
+            Debug.Log("Combined Gaze Origin: " + origin);
+            Debug.Log("Combined Gaze Direction: " + direction);
+
+            // Optional: Get the object being looked at (if any)
+            if (hitInfo.collider != null) {
+                Debug.Log("Hit Object: " + hitInfo.collider.gameObject.name);
+            }
+        }
+    }
+
+    void Start() {
+
+        eyeCallbackDelegate eyeCallBackFuntion = eyeCallback;
+        System.IntPtr callbackPtr = Marshal.GetFunctionPointerForDelegate(eyeCallBackFuntion);
+
+
+
+        // Make sure eye tracking is initialized
+        if (!SRanipal_Eye_Framework.Instance.EnableEye) {
+            Debug.LogError("Failed to enable SRanipal Eye Framework!");
+            return;
         }
 
-        SRanipal_Eye_API.RegisterEyeDataCallback_v2(true);
-  
+        // Initialize callback if available
+        if (!SRanipal_Eye_Framework.Instance.EnableEyeDataCallback) {
+            Debug.LogError("SRanipal Eye Framework eye callback not supported!");
+            return;
+        }
+
+        SRanipal_Eye_Framework.Instance.StartFramework();
+        SRanipal_Eye_v2.WrapperRegisterEyeDataCallback(callbackPtr);
     }
 
-     void EyeCallback(ref EyeData_v2 eye_data)
-    {
-        Debug.Log("readinggggg");
-        eyeData = eye_data; // Copy the eye data from the callback
+    void OnEnable() {
+       // SRanipal_Eye_Framework.Instance.StartFramework();
+        
 
-        // Example: Print gaze direction
-        Vector3 combinedGaze = eyeData.verbose_data.combined.eye_data.gaze_direction_normalized;
-        Debug.Log("Combined Gaze Direction: " + combinedGaze); 
+        // Correct Method:
+        //if (SRanipal_Eye.RegisterEyeDataCallback(Marshal.GetFunctionPointerForDelegate(OnGazeRay)) != Vive.SR.anipal.Eye.SRanipal_Error.WORKING) {
+        //    Debug.LogError("Error registering eye data callback!");
+       // }
+    }
+
+    // Unsubscribe from the callback 
+    void OnDisable() {
+     //   SRanipal_Eye.UnRegisterEyeDataCallback(Marshal.GetFunctionPointerForDelegate(OnGazeRay));
     }
 }

@@ -665,14 +665,7 @@ MonoBehaviour:
   - {fileID: 8696673654983134887}
   - {fileID: -4731438336562001402}
   - {fileID: 4135229692886101830}
-  - {fileID: 6544332708517408550}
   - {fileID: 2220871646205782247}
-  - {fileID: 5872305767421535147}
-  - {fileID: 6375777145014556276}
-  - {fileID: 4641971184458507037}
-  - {fileID: 1145360470432926950}
-  - {fileID: 1355611101032535796}
-  - {fileID: -747859379779881111}
   m_renderMode: 0
   m_depthSubmissionMode: 0
   m_optimizeBufferDiscards: 0
@@ -864,7 +857,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3cf79659a011bd419c7a2a30eb74e9a, type: 3}
   m_Name: EyeGazeInteraction Standalone
   m_EditorClassIdentifier: 
-  m_enabled: 1
+  m_enabled: 0
   nameUi: Eye Gaze Interaction Profile
   version: 0.0.1
   featureIdInternal: com.unity.openxr.feature.input.eyetracking
@@ -1019,20 +1012,6 @@ MonoBehaviour:
   - {fileID: 4743943348186933471}
   - {fileID: -6368128839055358620}
   - {fileID: -7581625304019661375}
-  - {fileID: -1363480054727808211}
-  - {fileID: -1783080495965187579}
-  - {fileID: 6919883643831923630}
-  - {fileID: 6035786489991957971}
-  - {fileID: -3525120280213233131}
-  - {fileID: 1949793715622725729}
-  - {fileID: -1158833558758912589}
-  - {fileID: -1587737124451166131}
-  - {fileID: 3509402627916563867}
-  - {fileID: 2127292171929324138}
-  - {fileID: -8929000815359641289}
-  - {fileID: -5092896336966439106}
-  - {fileID: -3087201877754408583}
-  - {fileID: 6044530550693007270}
   m_renderMode: 1
   m_depthSubmissionMode: 0
   m_optimizeBufferDiscards: 0
@@ -1746,9 +1725,7 @@ MonoBehaviour:
   - {fileID: -2150382829162842205}
   - {fileID: 2785801254050174073}
   - {fileID: -5191125240872322840}
-  - {fileID: 3225301227077913091}
   - {fileID: -5644509607064669464}
-  - {fileID: -219871596094790769}
   m_renderMode: 1
   m_depthSubmissionMode: 0
   m_optimizeBufferDiscards: 0

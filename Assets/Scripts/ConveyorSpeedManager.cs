@@ -17,7 +17,7 @@ public class ConveyorSpeedManager : MonoBehaviour
     private static bool increasedSpeed2 = false;
     private static bool increasedSpeed3 = false;
 
-    public static bool adaptive = true;
+    public static bool adaptive = false;
     public GameObject experiencePanel;
     public GameObject startPanel;
 

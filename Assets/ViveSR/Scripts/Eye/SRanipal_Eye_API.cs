@@ -26,14 +26,6 @@ namespace ViveSR
                 [DllImport("SRanipal")]
                 public static extern Error GetEyeData(ref EyeData data);
 
-                internal static void RegisterEyeDataCallback_v2(bool eyeCallbackRegistered) {
-                    throw new NotImplementedException();
-                }
-
-                internal static void RegisterEyeDataCallback_v2(object eyeCallback) {
-                    throw new NotImplementedException();
-                }
-
                 /// <summary>
                 /// Gets data from anipal's Eye module.
                 /// </summary>
