@@ -33,6 +33,8 @@ namespace ViveSR
                 }
                 [SerializeField] private GazeType gazeType = GazeType.Cyclopian;
 
+
+
                 private void Start()
                 {
                     if (!SRanipal_Eye_Framework.Instance.EnableEye)
@@ -57,6 +59,10 @@ namespace ViveSR
                     {
                         DoSRAnipal();
                     }
+
+
+
+    
                 }
 
 
@@ -196,6 +202,23 @@ namespace ViveSR
                 private static void EyeCallback(ref EyeData_v2 eye_data)
                 {
                     eyeData = eye_data;
+
+
+                    // Example threshold values for pupil size in millimeters
+                    float highEngagementThreshold = 5.0f; // Pupil size considered indicative of high engagement
+                    float lowEngagementThreshold = 3.0f; // Pupil size considered indicative of low engagement
+                    float leftPupilSize = eyeData.verbose_data.left.pupil_diameter_mm;
+                    float rightPupilSize = eyeData.verbose_data.right.pupil_diameter_mm;
+                   // Debug.Log(eyeData.verbose_data.left.eye_openness);
+
+                    // Check pupil size against thresholds and adjust game difficulty accordingly
+                    if (leftPupilSize > highEngagementThreshold || rightPupilSize > highEngagementThreshold) {
+                        // Increase game difficulty
+                        // Example: Increase conveyor belt speed or add more obstacles
+                    } else if (leftPupilSize < lowEngagementThreshold && rightPupilSize < lowEngagementThreshold) {
+                        // Decrease game difficulty
+                        // Example: Decrease conveyor belt speed or reduce obstacles
+                    }
                 }
 
                 private void DoRaycast()
@@ -213,6 +236,10 @@ namespace ViveSR
                     {
                         Debug.Log(hit.collider.gameObject.name + "; " + this.transform.gameObject.name);
 						lengthOfRay = hit.distance;
+
+                        if(hit.collider.gameObject.name == "box-small (1)") {
+                            Debug.LogWarning("hit large box!!");
+                        }
                     }
                     else
                     {
