@@ -34,6 +34,13 @@ namespace ViveSR
                 [SerializeField] private GazeType gazeType = GazeType.Cyclopian;
 
 
+                private static float timeHighPupil = 0.0f;
+                private static float timeLowPupil = 0.0f;
+                private static float timeNotSeeingBelt = 0.0f;
+                private static bool increasignHighTime = false;
+                private static bool increasignLowTime = false;
+
+
 
                 private void Start()
                 {
@@ -61,8 +68,36 @@ namespace ViveSR
                     }
 
 
+                    if (increasignHighTime)
+                    {
+                        timeHighPupil += Time.deltaTime;
+                    }
 
-    
+                    if (increasignLowTime)
+                    {
+                        timeLowPupil += Time.deltaTime;
+                    }
+
+                    if (timeHighPupil >= 10f)
+                    {
+                        timeHighPupil = 0;
+                        ConveyorSpeedManager.pupiSizeIncrease();
+                    }
+                    
+                    if (timeLowPupil >= 10f)
+                    {
+                        timeLowPupil = 0;
+                        ConveyorSpeedManager.pupiSizeDecrease();
+                    }
+
+
+                    timeNotSeeingBelt += Time.deltaTime;
+                    if (timeNotSeeingBelt >= 10.0f)
+                    {
+                        //show vignette and focus text
+                    }
+
+
                 }
 
 
@@ -212,13 +247,21 @@ namespace ViveSR
                    // Debug.Log(eyeData.verbose_data.left.eye_openness);
 
                     // Check pupil size against thresholds and adjust game difficulty accordingly
-                    if (leftPupilSize > highEngagementThreshold || rightPupilSize > highEngagementThreshold) {
-                        // Increase game difficulty
-                        // Example: Increase conveyor belt speed or add more obstacles
-                    } else if (leftPupilSize < lowEngagementThreshold && rightPupilSize < lowEngagementThreshold) {
-                        // Decrease game difficulty
-                        // Example: Decrease conveyor belt speed or reduce obstacles
+                    if (leftPupilSize > highEngagementThreshold || rightPupilSize > highEngagementThreshold)
+                    {
+                        increasignHighTime = true;
+                    } else if (leftPupilSize < lowEngagementThreshold && rightPupilSize < lowEngagementThreshold)
+                    {
+                        increasignLowTime = true;
                     }
+                    else
+                    {
+                        timeHighPupil = 0;
+                        timeLowPupil = 0;
+                        increasignHighTime = false;
+                        increasignLowTime = false;
+                    }
+                    
                 }
 
                 private void DoRaycast()
@@ -237,8 +280,9 @@ namespace ViveSR
                         Debug.Log(hit.collider.gameObject.name + "; " + this.transform.gameObject.name);
 						lengthOfRay = hit.distance;
 
-                        if(hit.collider.gameObject.name == "box-small (1)") {
-                            Debug.LogWarning("hit large box!!");
+                        if(hit.collider.gameObject.name == "conveyor-long-stripe-sides")
+                        {
+                            timeNotSeeingBelt = 0.0f;
                         }
                     }
                     else

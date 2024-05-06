@@ -111,6 +111,28 @@ public class ConveyorSpeedManager : MonoBehaviour
         }
     }
 
+    public static void pupiSizeIncrease()
+    {
+        Debug.Log("Pupil Size has been high for some time, decreasing speed");
+        
+        ReduceConveyorSpeed();
+
+    }
+    public static void pupiSizeDecrease()
+    {
+        Debug.Log("Pupil Size has been low for some time, increasing speed");
+        
+        increaseConveyorSpeed();
+        if (!BoltSpawner.doubleBolts)
+        {
+            BoltSpawner.doubleBolts = true;
+        }else if (!BoltSpawner.tripleBolts)
+        {
+            BoltSpawner.tripleBolts = true;
+        }
+
+    }
+
     public static void madeError()
     {
         Debug.Log("Error made");
@@ -178,7 +200,7 @@ public class ConveyorSpeedManager : MonoBehaviour
         }
     }
 
-    private void increaseConveyorSpeed()
+    private static void increaseConveyorSpeed()
     {
         if (adaptive)
         {

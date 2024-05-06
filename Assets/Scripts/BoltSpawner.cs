@@ -88,7 +88,7 @@ public class BoltSpawner : MonoBehaviour
             {
                 GameObject newBolt2 = Instantiate(boltPrefab, position2, spawnPoint.rotation);
 
-                float goldChance2 = 0.2f; // 20% chance of gold
+                float goldChance2 = 0.25f; // 20% chance of gold
 
                 bool isGold2 = Random.value < goldChance2; 
 
@@ -107,7 +107,7 @@ public class BoltSpawner : MonoBehaviour
             {
                 GameObject newBolt3 = Instantiate(boltPrefab, position3, spawnPoint.rotation);
 
-                float goldChance3 = 0.2f; // 20% chance of gold
+                float goldChance3 = 0.3f; // 20% chance of gold
 
                 bool isGold3 = Random.value < goldChance3; 
 
