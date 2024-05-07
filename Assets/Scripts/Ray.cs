@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.Assertions;
+using TMPro;
 
 namespace ViveSR
 {
@@ -40,6 +41,10 @@ namespace ViveSR
                 private static bool increasignHighTime = false;
                 private static bool increasignLowTime = false;
 
+                public GameObject focusText;
+                [SerializeField] public  GameObject textMeshPro;
+                private static float pupilSize = 0.0f;
+
 
 
                 private void Start()
@@ -57,6 +62,8 @@ namespace ViveSR
                 private void Update()
                 {
 
+                    textMeshPro.GetComponent<TextMeshProUGUI>().text = pupilSize + "";
+
                     if (SRanipal_Eye_Framework.Status != SRanipal_Eye_Framework.FrameworkStatus.WORKING &&
                         SRanipal_Eye_Framework.Status != SRanipal_Eye_Framework.FrameworkStatus.NOT_SUPPORT)
                     {
@@ -68,12 +75,12 @@ namespace ViveSR
                     }
 
 
-                    if (increasignHighTime)
+                    if (increasignHighTime && BoltSpawner.gameOn)
                     {
                         timeHighPupil += Time.deltaTime;
                     }
 
-                    if (increasignLowTime)
+                    if (increasignLowTime && BoltSpawner.gameOn)
                     {
                         timeLowPupil += Time.deltaTime;
                     }
@@ -90,11 +97,16 @@ namespace ViveSR
                         ConveyorSpeedManager.pupiSizeDecrease();
                     }
 
+                    if (BoltSpawner.gameOn) {
+                        timeNotSeeingBelt += Time.deltaTime;
 
-                    timeNotSeeingBelt += Time.deltaTime;
-                    if (timeNotSeeingBelt >= 10.0f)
+                    }
+                    if (timeNotSeeingBelt >= 5.0f && ConveyorSpeedManager.adaptive)
                     {
+                        focusText.active = true;
                         //show vignette and focus text
+                    } else {
+                        focusText.active = false;
                     }
 
 
@@ -241,18 +253,25 @@ namespace ViveSR
 
                     // Example threshold values for pupil size in millimeters
                     float highEngagementThreshold = 5.0f; // Pupil size considered indicative of high engagement
-                    float lowEngagementThreshold = 3.0f; // Pupil size considered indicative of low engagement
+                    float lowEngagementThreshold = 2.0f; // Pupil size considered indicative of low engagement
                     float leftPupilSize = eyeData.verbose_data.left.pupil_diameter_mm;
                     float rightPupilSize = eyeData.verbose_data.right.pupil_diameter_mm;
-                   // Debug.Log(eyeData.verbose_data.left.eye_openness);
+                    // Debug.Log(eyeData.verbose_data.left.eye_openness);
 
+                    pupilSize = leftPupilSize;
+
+                   // textMeshPro.text = leftPupilSize + "";
                     // Check pupil size against thresholds and adjust game difficulty accordingly
                     if (leftPupilSize > highEngagementThreshold || rightPupilSize > highEngagementThreshold)
                     {
                         increasignHighTime = true;
-                    } else if (leftPupilSize < lowEngagementThreshold && rightPupilSize < lowEngagementThreshold)
+                        increasignLowTime = false;
+                        timeLowPupil = 0.0f;
+                    } else if (leftPupilSize < lowEngagementThreshold || rightPupilSize < lowEngagementThreshold)
                     {
                         increasignLowTime = true;
+                        increasignHighTime = false;
+                        timeHighPupil = 0.0f;
                     }
                     else
                     {

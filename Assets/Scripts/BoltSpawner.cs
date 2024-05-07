@@ -19,6 +19,8 @@ public class BoltSpawner : MonoBehaviour
     public static Boolean doubleBolts = true;
     public static Boolean tripleBolts = true;
 
+    public static float silverBoltsCount = 0.0f;
+
 
     void Start()
     {
@@ -79,6 +81,7 @@ public class BoltSpawner : MonoBehaviour
                 boltMaterial.color = new Color(1f, 0.84f, 0f); // Your gold color 
             } else { 
                 boltMaterial.color = new Color(0.8f, 0.8f, 0.8f); // Example silver color
+                silverBoltsCount += 1.0f;
             }
             
             newBolt.GetComponent<BoltMovement>().conveyorSpeed = currentConveyorSpeed;
@@ -97,6 +100,7 @@ public class BoltSpawner : MonoBehaviour
                     boltMaterial2.color = new Color(1f, 0.84f, 0f); // Your gold color 
                 } else { 
                     boltMaterial2.color = new Color(0.8f, 0.8f, 0.8f); // Example silver color
+                    silverBoltsCount += 1.0f;
                 }
                 
                 newBolt2.GetComponent<BoltMovement>().conveyorSpeed = currentConveyorSpeed;
@@ -116,6 +120,7 @@ public class BoltSpawner : MonoBehaviour
                     boltMaterial2.color = new Color(1f, 0.84f, 0f); // Your gold color 
                 } else { 
                     boltMaterial2.color = new Color(0.8f, 0.8f, 0.8f); // Example silver color
+                    silverBoltsCount += 1.0f;
                 }
                 
                 newBolt3.GetComponent<BoltMovement>().conveyorSpeed = currentConveyorSpeed;

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class ConveyorSpeedManager : MonoBehaviour
@@ -17,13 +18,21 @@ public class ConveyorSpeedManager : MonoBehaviour
     private static bool increasedSpeed2 = false;
     private static bool increasedSpeed3 = false;
 
-    public static bool adaptive = false;
+    public static bool adaptive = true;
+    public static bool hardVersion = false;
     public GameObject experiencePanel;
     public GameObject startPanel;
 
+    public static float errorsMadeByUser = 0.0f;
+    public static float silverBoltsPassed = 0.0f;
+    public static float score = 100.0f;
+
+    [SerializeField] public GameObject scoreText;
 
     void Start()
     {
+
+     
 
         if (!adaptive)
         {
@@ -44,61 +53,48 @@ public class ConveyorSpeedManager : MonoBehaviour
             gameTime += Time.deltaTime;
 
         }
-        if (adaptive)
-        {
+        if (adaptive) {
 
 
-            if (BoltSpawner.gameOn)
-            {
+            if (BoltSpawner.gameOn) {
                 timeSinceLastError += Time.deltaTime;
             }
 
+            if (timeSinceLastError >= 15f) {
+                timeSinceLastError = 0.0f;
+                increaseConveyorSpeed();
+                if (!BoltSpawner.doubleBolts) {
+                    Debug.Log("activating double bolts");
 
-            if (timeSinceLastError > 30f)
-            {
-                if (!increasedSpeed1)
-                {
-                    increaseConveyorSpeed();
-                    increasedSpeed1 = true;
-                }
-                Debug.Log("activating double bolts");
+                    BoltSpawner.doubleBolts = true;
+                } else if (!BoltSpawner.tripleBolts) {
+                    Debug.Log("activating triple bolts");
 
-                BoltSpawner.doubleBolts = true;
-            }
-
-            if (timeSinceLastError > 60f)
-            {
-                if (!increasedSpeed2)
-                {
-                    increaseConveyorSpeed();
-                    increasedSpeed3 = true;
-                }
-                Debug.Log("activating triple bolts");
-
-                BoltSpawner.tripleBolts = true;
-            }
-
-            if (timeSinceLastError > 90f)
-            {
-                if (!increasedSpeed3)
-                {
-                    increaseConveyorSpeed();
-                    increasedSpeed3 = true;
+                    BoltSpawner.tripleBolts = true;
                 }
             }
         }
         else
         {
-            if (gameTime > 60f)
-            {
+            if (hardVersion) {
                 BoltSpawner.startGameHard();
+            } else {
+                if (gameTime > 60f) {
+                    BoltSpawner.startGameHard();
 
-            }else if (gameTime > 30f)
-            {
-                BoltSpawner.startGameMedium();
+                } else if (gameTime > 30f) {
+                    BoltSpawner.startGameMedium();
+                }
             }
+
      
         }
+
+        score = ((silverBoltsPassed - errorsMadeByUser) / BoltSpawner.silverBoltsCount)*100.0f;
+        Debug.Log(score);
+
+
+        scoreText.GetComponent<TextMeshProUGUI>().text =  "Score: " + score;
     }
 
 
@@ -108,27 +104,35 @@ public class ConveyorSpeedManager : MonoBehaviour
         {
             madeError();
             Destroy(other.gameObject);
+            errorsMadeByUser += 1.0f;
+        } else if(other.CompareTag("Bolt")) {
+            silverBoltsPassed += 1.0f;
         }
     }
 
     public static void pupiSizeIncrease()
+    
     {
-        Debug.Log("Pupil Size has been high for some time, decreasing speed");
-        
-        ReduceConveyorSpeed();
+        if (adaptive) {
+            Debug.LogWarning("Pupil Size has been high for some time, decreasing speed");
+
+            ReduceConveyorSpeed();
+        }
+
 
     }
     public static void pupiSizeDecrease()
     {
-        Debug.Log("Pupil Size has been low for some time, increasing speed");
-        
-        increaseConveyorSpeed();
-        if (!BoltSpawner.doubleBolts)
-        {
-            BoltSpawner.doubleBolts = true;
-        }else if (!BoltSpawner.tripleBolts)
-        {
-            BoltSpawner.tripleBolts = true;
+        if (adaptive) {
+            Debug.LogWarning("Pupil Size has been low for some time, increasing speed");
+
+            increaseConveyorSpeed();
+            if (!BoltSpawner.doubleBolts) {
+                BoltSpawner.doubleBolts = true;
+            } else if (!BoltSpawner.tripleBolts) {
+                BoltSpawner.tripleBolts = true;
+
+            }
         }
 
     }
