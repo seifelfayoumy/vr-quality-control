@@ -21,6 +21,8 @@ public class BoltSpawner : MonoBehaviour
 
     public static float silverBoltsCount = 0.0f;
 
+    public static float totalTime = 0.0f;
+
 
     void Start()
     {
@@ -32,6 +34,16 @@ public class BoltSpawner : MonoBehaviour
         
         
         
+    }
+
+    void Update() {
+       // if (gameOn) {
+           // totalTime += Time.deltaTime;
+       // }
+
+       // if(totalTime >= 90.0f) {
+        //    gameOn = false;
+      //  }
     }
 
     public static void startGameEasy()

@@ -29,6 +29,9 @@ public class ConveyorSpeedManager : MonoBehaviour
 
     [SerializeField] public GameObject scoreText;
 
+    public static bool boltsSpawning = false;
+    public static int boltsTouching = 0;
+
     void Start()
     {
 
@@ -48,6 +51,10 @@ public class ConveyorSpeedManager : MonoBehaviour
 
     private void Update()
     {
+        if(boltsTouching == 0 && boltsSpawning) {
+           // scoreText.active = true;
+        }
+
         if (BoltSpawner.gameOn)
         {
             gameTime += Time.deltaTime;
@@ -79,19 +86,25 @@ public class ConveyorSpeedManager : MonoBehaviour
             if (hardVersion) {
                 BoltSpawner.startGameHard();
             } else {
-                if (gameTime > 60f) {
+                if (gameTime > 50f) {
                     BoltSpawner.startGameHard();
 
-                } else if (gameTime > 30f) {
+                } else if (gameTime > 25f) {
                     BoltSpawner.startGameMedium();
                 }
             }
 
+            
+
      
         }
 
+        if(gameTime >= 75.0f) {
+            BoltSpawner.gameOn = false;
+            scoreText.active = true;
+        }
+
         score = ((silverBoltsPassed - errorsMadeByUser) / BoltSpawner.silverBoltsCount)*100.0f;
-        Debug.Log(score);
 
 
         scoreText.GetComponent<TextMeshProUGUI>().text =  "Score: " + score;
@@ -102,12 +115,15 @@ public class ConveyorSpeedManager : MonoBehaviour
     {
         if (other.CompareTag("Bolt") && other.GetComponent<MeshRenderer>().material.color == new Color(1f, 0.84f, 0f))
         {
+            boltsSpawning = true;
             madeError();
-            Destroy(other.gameObject);
             errorsMadeByUser += 1.0f;
         } else if(other.CompareTag("Bolt")) {
+            boltsSpawning = true;
             silverBoltsPassed += 1.0f;
         }
+
+        Destroy(other.gameObject);
     }
 
     public static void pupiSizeIncrease()
