@@ -252,7 +252,7 @@ namespace ViveSR
 
 
                     // Example threshold values for pupil size in millimeters
-                    float highEngagementThreshold = 5.0f; // Pupil size considered indicative of high engagement
+                    float highEngagementThreshold = 6.0f; // Pupil size considered indicative of high engagement
                     float lowEngagementThreshold = 2.0f; // Pupil size considered indicative of low engagement
                     float leftPupilSize = eyeData.verbose_data.left.pupil_diameter_mm;
                     float rightPupilSize = eyeData.verbose_data.right.pupil_diameter_mm;

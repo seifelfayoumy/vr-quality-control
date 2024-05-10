@@ -67,7 +67,7 @@ public class ConveyorSpeedManager : MonoBehaviour
                 timeSinceLastError += Time.deltaTime;
             }
 
-            if (timeSinceLastError >= 15f) {
+            if (timeSinceLastError >= 10f) {
                 timeSinceLastError = 0.0f;
                 increaseConveyorSpeed();
                 if (!BoltSpawner.doubleBolts) {
