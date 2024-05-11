@@ -64,12 +64,19 @@ public class BoltSpawner : MonoBehaviour
     public static void startGameHard()
     {
         gameOn = true;
-        currentConveyorSpeed = 1.2f;
+        currentConveyorSpeed = 1.4f;
         doubleBolts = true;
         tripleBolts = true;
     }
-    
-    
+
+    public static void startGameVeryHard() {
+        gameOn = true;
+        currentConveyorSpeed = 1.7f;
+        doubleBolts = true;
+        tripleBolts = true;
+    }
+
+
 
     void SpawnBolt()
     {
@@ -85,7 +92,7 @@ public class BoltSpawner : MonoBehaviour
 
 
             // Assign a color (with weighted gold chance)
-            float goldChance = 0.2f; // 20% chance of gold
+            float goldChance = 0.35f; // 20% chance of gold
             bool isGold = Random.value < goldChance; 
 
             Material boltMaterial = newBolt.GetComponent<MeshRenderer>().material;
@@ -103,7 +110,7 @@ public class BoltSpawner : MonoBehaviour
             {
                 GameObject newBolt2 = Instantiate(boltPrefab, position2, spawnPoint.rotation);
 
-                float goldChance2 = 0.25f; // 20% chance of gold
+                float goldChance2 = 0.4f; // 20% chance of gold
 
                 bool isGold2 = Random.value < goldChance2; 
 
@@ -123,7 +130,7 @@ public class BoltSpawner : MonoBehaviour
             {
                 GameObject newBolt3 = Instantiate(boltPrefab, position3, spawnPoint.rotation);
 
-                float goldChance3 = 0.3f; // 20% chance of gold
+                float goldChance3 = 0.45f; // 20% chance of gold
 
                 bool isGold3 = Random.value < goldChance3; 
 

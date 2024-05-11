@@ -19,7 +19,7 @@ public class ConveyorSpeedManager : MonoBehaviour
     private static bool increasedSpeed3 = false;
 
     public static bool adaptive = true;
-    public static bool hardVersion = false;
+    public static bool hardVersion = true;
     public GameObject experiencePanel;
     public GameObject startPanel;
 
@@ -84,7 +84,7 @@ public class ConveyorSpeedManager : MonoBehaviour
         else
         {
             if (hardVersion) {
-                BoltSpawner.startGameHard();
+                BoltSpawner.startGameVeryHard();
             } else {
                 if (gameTime > 50f) {
                     BoltSpawner.startGameHard();
@@ -232,14 +232,14 @@ public class ConveyorSpeedManager : MonoBehaviour
             GameObject[] bolts = GameObject.FindGameObjectsWithTag("Bolt");
             foreach (GameObject bolt in bolts)
             {
-                if (bolt.GetComponent<BoltMovement>().conveyorSpeed < 1)
+                if (bolt.GetComponent<BoltMovement>().conveyorSpeed < 1.4f)
                 {
                     bolt.GetComponent<BoltMovement>().conveyorSpeed += speedReductionAmount;
 
                 }
             }
 
-            if (BoltSpawner.currentConveyorSpeed < 1)
+            if (BoltSpawner.currentConveyorSpeed < 1.4f)
             {
                 BoltSpawner.currentConveyorSpeed += speedReductionAmount;
 

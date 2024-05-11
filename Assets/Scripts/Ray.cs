@@ -101,7 +101,7 @@ namespace ViveSR
                         timeNotSeeingBelt += Time.deltaTime;
 
                     }
-                    if (timeNotSeeingBelt >= 5.0f && ConveyorSpeedManager.adaptive)
+                    if (timeNotSeeingBelt >= 2.0f && ConveyorSpeedManager.adaptive)
                     {
                         focusText.active = true;
                         //show vignette and focus text
