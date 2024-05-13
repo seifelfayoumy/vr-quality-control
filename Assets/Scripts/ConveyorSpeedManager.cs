@@ -17,9 +17,10 @@ public class ConveyorSpeedManager : MonoBehaviour
     private static bool increasedSpeed1 = false;
     private static bool increasedSpeed2 = false;
     private static bool increasedSpeed3 = false;
-
-    public static bool adaptive = true;
-    public static bool hardVersion = true;
+    [SerializeField] public  bool makeAdaptive;
+    [SerializeField] public  bool makeHardVersion;
+    [SerializeField] public static bool adaptive = false;
+    [SerializeField] public static bool hardVersion = true;
     public GameObject experiencePanel;
     public GameObject startPanel;
 
@@ -34,6 +35,8 @@ public class ConveyorSpeedManager : MonoBehaviour
 
     void Start()
     {
+        adaptive = makeAdaptive;
+        hardVersion = makeHardVersion;
 
      
 
@@ -83,7 +86,7 @@ public class ConveyorSpeedManager : MonoBehaviour
         }
         else
         {
-            if (hardVersion) {
+            if (hardVersion && BoltSpawner.gameOn) {
                 BoltSpawner.startGameVeryHard();
             } else {
                 if (gameTime > 50f) {
