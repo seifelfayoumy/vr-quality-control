@@ -19,11 +19,15 @@ public class ConveyorSpeedManager : MonoBehaviour
     private static bool increasedSpeed3 = false;
     [SerializeField] public  bool makeAdaptive;
     [SerializeField] public  bool makeHardVersion;
+    [SerializeField] public bool makeNetwork;
     [SerializeField] public static bool adaptive = false;
     [SerializeField] public static bool hardVersion = true;
+    [SerializeField] public static bool network = true;
     public GameObject experiencePanel;
     public GameObject startPanel;
-
+    public GameObject startPanelNetwork;
+    public GameObject connectionManager;
+    public GameObject rigSelection;
     public static float errorsMadeByUser = 0.0f;
     public static float silverBoltsPassed = 0.0f;
     public static float score = 100.0f;
@@ -37,15 +41,25 @@ public class ConveyorSpeedManager : MonoBehaviour
     {
         adaptive = makeAdaptive;
         hardVersion = makeHardVersion;
+        network = makeNetwork;
 
-     
 
-        if (!adaptive)
-        {
+        if (network) {
+            startPanelNetwork.SetActive(true);
             experiencePanel.SetActive(false);
-            startPanel.SetActive(true);
+            startPanel.SetActive(false);
+        } else {
+            connectionManager.SetActive(false);
+            rigSelection.SetActive(false);
+            if (!adaptive) {
+                experiencePanel.SetActive(false);
+                startPanel.SetActive(true);
 
+            }
         }
+        
+
+ 
         // Assuming you have a script controlling the conveyor speed 
         //originalConveyorSpeed = conveyorBelt.GetComponent<ConveyorMovement>().conveyorSpeed;
     }

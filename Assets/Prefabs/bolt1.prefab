@@ -84,6 +84,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 3c0e53109cded4799b30b692e5f33e6b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6691666280475886583}
+    - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 3c0e53109cded4799b30b692e5f33e6b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4376480310595947074}
+    - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 3c0e53109cded4799b30b692e5f33e6b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2903843670153586189}
   m_SourcePrefab: {fileID: 100100000, guid: 3c0e53109cded4799b30b692e5f33e6b, type: 3}
 --- !u!1 &3118111551681423224 stripped
 GameObject:
@@ -151,6 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   conveyorSpeed: 1
+  conveyorWall: {fileID: 0}
 --- !u!114 &6691666280475886583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,3 +322,39 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
+--- !u!114 &4376480310595947074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3118111551681423224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 2718251536
+  ObjectInterest: 1
+  _DestroyWhenStateAuthorityLeaves: 0
+  _AllowStateAuthorityOverride: 1
+  Flags: 786433
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 2903843670153586189}
+--- !u!114 &2903843670153586189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3118111551681423224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
