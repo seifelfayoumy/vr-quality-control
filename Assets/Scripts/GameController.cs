@@ -13,10 +13,13 @@ public class GameController : NetworkBehaviour {
         }
     }
 
+    
+
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     void RpcStartGame() {
         IsGameStarted = true;
         uiGameObject.SetActive(false);
+        BoltSpawner.startGameEasy();
     }
 
     public override void Spawned() {
