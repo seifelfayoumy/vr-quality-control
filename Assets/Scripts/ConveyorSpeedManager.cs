@@ -28,6 +28,10 @@ public class ConveyorSpeedManager : MonoBehaviour
     public GameObject startPanelNetwork;
     public GameObject connectionManager;
     public GameObject rigSelection;
+    public GameObject boltSpawner;
+
+    public GameObject boltSpawnerNetwork;
+
     public static float errorsMadeByUser = 0.0f;
     public static float silverBoltsPassed = 0.0f;
     public static float score = 100.0f;
@@ -48,6 +52,8 @@ public class ConveyorSpeedManager : MonoBehaviour
             startPanelNetwork.SetActive(true);
             experiencePanel.SetActive(false);
             startPanel.SetActive(false);
+            boltSpawner.SetActive(false);
+            boltSpawnerNetwork.SetActive(true);
         } else {
             connectionManager.SetActive(false);
             rigSelection.SetActive(false);

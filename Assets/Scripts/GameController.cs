@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class GameController : NetworkBehaviour {
     public GameObject uiGameObject;
+    public BoltSpawnerNetwork boltSpawnerNetwork;
 
     [Networked]
     public NetworkBool IsGameStarted { get; set; }
@@ -19,7 +20,7 @@ public class GameController : NetworkBehaviour {
     void RpcStartGame() {
         IsGameStarted = true;
         uiGameObject.SetActive(false);
-        BoltSpawner.startGameEasy();
+        boltSpawnerNetwork.RPC_StartGame(GameMode.Easy);
     }
 
     public override void Spawned() {
