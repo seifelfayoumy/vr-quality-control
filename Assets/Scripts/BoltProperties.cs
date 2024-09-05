@@ -35,7 +35,11 @@ public class BoltProperties : NetworkBehaviour {
         }
     }
 
-    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    public void grab() {
+        RPC_GrabBolt();
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
     public void RPC_GrabBolt() {
         if (!IsGold) {
             // Handle error logic here
@@ -43,7 +47,7 @@ public class BoltProperties : NetworkBehaviour {
             // You might want to call a method on a manager object to handle the error
             // For example: GameManager.Instance.MadeError();
         }
-        Runner.Despawn(Object);
+        //Runner.Despawn(Object);
     }
 
     public  void OnCollisionEnter(Collision collision) {

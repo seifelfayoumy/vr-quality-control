@@ -198,9 +198,9 @@ MonoBehaviour:
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BoltMovement, Assembly-CSharp
-        m_MethodName: hold
+      - m_Target: {fileID: -6830705230653571105}
+        m_TargetAssemblyTypeName: BoltProperties, Assembly-CSharp
+        m_MethodName: grab
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -327,7 +327,7 @@ MonoBehaviour:
   ObjectInterest: 1
   _DestroyWhenStateAuthorityLeaves: 0
   _AllowStateAuthorityOverride: 1
-  Flags: 786433
+  Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: -6830705230653571105}
@@ -373,7 +373,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3118111551681423224}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dea6e2c57bd432c45becfa162d76acd5, type: 3}
   m_Name: 

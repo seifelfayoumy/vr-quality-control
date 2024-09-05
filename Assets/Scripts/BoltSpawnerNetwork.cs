@@ -72,7 +72,7 @@ public class BoltSpawnerNetwork : NetworkBehaviour {
     }
 
     void SpawnBoltAtPosition(Vector3 position) {
-        NetworkObject boltObject = Runner.Spawn(boltPrefabRef, position, spawnPoint.rotation, Object.InputAuthority);
+        NetworkObject boltObject = Runner.Spawn(boltPrefabRef, position, spawnPoint.rotation,Runner.LocalPlayer);
         if (boltObject != null) {
             BoltProperties boltProps = boltObject.GetComponent<BoltProperties>();
             if (boltProps != null) {
