@@ -41,6 +41,11 @@ public class BoltProperties : NetworkBehaviour {
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
     public void RPC_GrabBolt() {
+
+        NetworkObject networkObject = GetComponent<NetworkObject>();
+
+        networkObject.RequestStateAuthority();
+
         if (!IsGold) {
             // Handle error logic here
             Debug.Log("Grabbed silver bolt - Error!");
