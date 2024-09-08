@@ -42,10 +42,8 @@ public class BoltProperties : NetworkBehaviour {
     [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
     public void RPC_GrabBolt() {
 
-        NetworkObject networkObject = this.GetComponent<NetworkObject>();
+        Debug.Log("Grabbed any bolt!");
 
-        Debug.LogWarning(networkObject.HasInputAuthority);
-        Debug.LogWarning(networkObject.InputAuthority);
 
         if (!IsGold) {
             // Handle error logic here
