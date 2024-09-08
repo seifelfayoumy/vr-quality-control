@@ -90,9 +90,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 3c0e53109cded4799b30b692e5f33e6b, type: 3}
       insertIndex: -1
       addedObject: {fileID: -7084212602371293118}
-    - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 3c0e53109cded4799b30b692e5f33e6b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -7527522860022321223}
   m_SourcePrefab: {fileID: 100100000, guid: 3c0e53109cded4799b30b692e5f33e6b, type: 3}
 --- !u!1 &3118111551681423224 stripped
 GameObject:
@@ -332,7 +329,6 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: -6830705230653571105}
   - {fileID: -7084212602371293118}
-  - {fileID: -7527522860022321223}
 --- !u!114 &-6830705230653571105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,33 +362,3 @@ MonoBehaviour:
   SyncParent: 0
   _autoAOIOverride: 1
   DisableSharedModeInterpolation: 0
---- !u!114 &-7527522860022321223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3118111551681423224}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dea6e2c57bd432c45becfa162d76acd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  networkTransform: {fileID: 0}
-  networkRigidbody: {fileID: 0}
-  _InitialIsKinematicState:
-    _value: 0
-  _CurrentGrabber: {fileID: 0}
-  expectedIsKinematic: 1
-  applyVelocityOnRelease: 1
-  onDidUngrab:
-    m_PersistentCalls:
-      m_Calls: []
-  onWillGrab:
-    m_PersistentCalls:
-      m_Calls: []
-  onDidGrab:
-    m_PersistentCalls:
-      m_Calls: []
-  extrapolateWhileTakingAuthority: 1
-  isTakingAuthority: 0
