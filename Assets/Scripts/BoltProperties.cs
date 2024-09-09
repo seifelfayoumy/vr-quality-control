@@ -46,6 +46,8 @@ public class BoltProperties : NetworkBehaviour {
         // Debug.Log(this.GetComponent<Fusion.XR.Shared.Grabbing.NetworkGrabbable>().IsGrabbed);
 
         // Debug.Log(this.GetComponent<NetworkHandColliderGrabbable>().);
+        GetComponent<NetworkObject>().AssignInputAuthority(Runner.LocalPlayer);
+        GetComponent<NetworkObject>().RequestStateAuthority();
         Debug.Log(Runner.LocalPlayer);
         Debug.Log(GetComponent<NetworkObject>().HasInputAuthority);
         Debug.Log(GetComponent<NetworkObject>().InputAuthority);
