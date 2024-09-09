@@ -43,8 +43,10 @@ public class BoltProperties : NetworkBehaviour {
     public void RPC_GrabBolt() {
 
         Debug.Log("Grabbed any bolt!");
-        Debug.Log(this.GetComponent<Fusion.XR.Shared.Grabbing.NetworkGrabbable>().IsGrabbed);
-        
+        // Debug.Log(this.GetComponent<Fusion.XR.Shared.Grabbing.NetworkGrabbable>().IsGrabbed);
+
+        // Debug.Log(this.GetComponent<NetworkHandColliderGrabbable>().);
+        Object.RequestStateAuthority();
 
 
         if (!IsGold) {
