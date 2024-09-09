@@ -39,13 +39,14 @@ public class BoltProperties : NetworkBehaviour {
         RPC_GrabBolt();
     }
 
-    [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+    [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_GrabBolt() {
 
         Debug.Log("Grabbed any bolt!");
         // Debug.Log(this.GetComponent<Fusion.XR.Shared.Grabbing.NetworkGrabbable>().IsGrabbed);
 
         // Debug.Log(this.GetComponent<NetworkHandColliderGrabbable>().);
+        Debug.Log(Runner.LocalPlayer);
         Debug.Log(GetComponent<NetworkObject>().HasInputAuthority);
         Debug.Log(GetComponent<NetworkObject>().InputAuthority);
         Debug.Log(GetComponent<NetworkObject>().HasStateAuthority);
