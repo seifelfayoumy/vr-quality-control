@@ -52,19 +52,21 @@ public class BoltProperties : NetworkBehaviour {
         RPC_ReleaseBolt();
     }
 
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_GrabBolt() {
         Debug.Log("Grabbed bolt");
+        Object.RequestStateAuthority();
         if (!Object.HasStateAuthority) return;
 
         rb.isKinematic = true;
         networkRigidbody.GetComponent<Rigidbody>().isKinematic = true;
     }
 
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_ReleaseBolt() {
         Debug.Log("Released bolt");
         if (!Object.HasStateAuthority) return;
+
 
         rb.isKinematic = false;
         networkRigidbody.GetComponent<Rigidbody>().isKinematic = false;
@@ -73,6 +75,8 @@ public class BoltProperties : NetworkBehaviour {
         Vector3 releaseVelocity = (transform.position - lastPosition) / Runner.DeltaTime * releaseVelocityMultiplier;
         rb.velocity = releaseVelocity;
         networkRigidbody.GetComponent<Rigidbody>().velocity = releaseVelocity;
+
+        Object.ReleaseStateAuthoirty();
     }
 
     public void OnCollisionEnter(Collision collision) {
