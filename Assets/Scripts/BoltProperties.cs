@@ -5,13 +5,16 @@ public class BoltProperties : NetworkBehaviour {
     [Networked] public NetworkBool IsGold { get; set; }
     [Networked] public float ConveyorSpeed { get; set; }
     [Networked] public NetworkBool OnConveyor { get; set; }
-    [Networked] public NetworkBool IsGrabbed { get; set; }
 
     private MeshRenderer meshRenderer;
+    private NetworkRigidbody networkRigidbody;
     private Rigidbody rb;
+    private Vector3 lastPosition;
+    private float releaseVelocityMultiplier = 1f; // Adjust this value to control release velocity
 
     public override void Spawned() {
         meshRenderer = GetComponent<MeshRenderer>();
+        networkRigidbody = GetComponent<NetworkRigidbody>();
         rb = GetComponent<Rigidbody>();
         UpdateVisuals();
     }
@@ -23,23 +26,14 @@ public class BoltProperties : NetworkBehaviour {
     }
 
     public override void FixedUpdateNetwork() {
-        if (OnConveyor && !IsGrabbed) {
-            transform.Translate(Vector3.right * ConveyorSpeed * Runner.DeltaTime);
+        if (OnConveyor) {
+            rb.MovePosition(rb.position + Vector3.right * ConveyorSpeed * Runner.DeltaTime);
         }
 
-        if (Object.HasStateAuthority) {
-            // Sync physics properties
-            rb.position = transform.position;
-            rb.rotation = transform.rotation;
-        }
+        // Store the current position for velocity calculation
+        lastPosition = transform.position;
     }
 
-    public void grab() {
-        RPC_GrabBolt(Runner.LocalPlayer);
-    }
-    public void release() {
-        RPC_ReleaseBolt(new Vector3(0,0,0));
-    }
     public override void Render() {
         UpdateVisuals();
     }
@@ -50,28 +44,35 @@ public class BoltProperties : NetworkBehaviour {
         }
     }
 
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void RPC_GrabBolt(PlayerRef player) {
-        if (Object.HasStateAuthority) {
-            IsGrabbed = true;
-            Object.AssignInputAuthority(player);
-            rb.isKinematic = true;
-
-            if (!IsGold) {
-                Debug.Log("Grabbed silver bolt - Error!");
-                // Handle error logic here
-            }
-        }
+    public void grab() {
+        RPC_GrabBolt();
     }
 
-    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-    public void RPC_ReleaseBolt(Vector3 releaseVelocity) {
-        if (Object.HasStateAuthority) {
-            IsGrabbed = false;
-           // Object.InputAuthority = PlayerRef.None;
-            rb.isKinematic = false;
-            rb.velocity = releaseVelocity;
-        }
+    public void release() {
+        RPC_ReleaseBolt();
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RPC_GrabBolt() {
+        Debug.Log("Grabbed bolt");
+        if (!Object.HasStateAuthority) return;
+
+        rb.isKinematic = true;
+        networkRigidbody.GetComponent<Rigidbody>().isKinematic = true;
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RPC_ReleaseBolt() {
+        Debug.Log("Released bolt");
+        if (!Object.HasStateAuthority) return;
+
+        rb.isKinematic = false;
+        networkRigidbody.GetComponent<Rigidbody>().isKinematic = false;
+
+        // Calculate release velocity based on recent movement
+        Vector3 releaseVelocity = (transform.position - lastPosition) / Runner.DeltaTime * releaseVelocityMultiplier;
+        rb.velocity = releaseVelocity;
+        networkRigidbody.GetComponent<Rigidbody>().velocity = releaseVelocity;
     }
 
     public void OnCollisionEnter(Collision collision) {
