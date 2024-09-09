@@ -327,7 +327,7 @@ MonoBehaviour:
   ObjectInterest: 1
   _DestroyWhenStateAuthorityLeaves: 0
   _AllowStateAuthorityOverride: 1
-  Flags: 262145
+  Flags: 786433
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: -6830705230653571105}
@@ -383,7 +383,7 @@ MonoBehaviour:
   _InitialIsKinematicState:
     _value: 0
   _CurrentGrabber: {fileID: 0}
-  expectedIsKinematic: 0
+  expectedIsKinematic: 1
   applyVelocityOnRelease: 1
   onDidUngrab:
     m_PersistentCalls:

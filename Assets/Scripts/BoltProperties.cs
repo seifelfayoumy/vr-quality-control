@@ -46,7 +46,12 @@ public class BoltProperties : NetworkBehaviour {
         // Debug.Log(this.GetComponent<Fusion.XR.Shared.Grabbing.NetworkGrabbable>().IsGrabbed);
 
         // Debug.Log(this.GetComponent<NetworkHandColliderGrabbable>().);
-        Object.RequestStateAuthority();
+        Debug.Log(GetComponent<NetworkObject>().HasInputAuthority);
+        Debug.Log(GetComponent<NetworkObject>().InputAuthority);
+        Debug.Log(GetComponent<NetworkObject>().HasStateAuthority);
+        Debug.Log(GetComponent<NetworkObject>().StateAuthority);
+
+
 
 
         if (!IsGold) {
