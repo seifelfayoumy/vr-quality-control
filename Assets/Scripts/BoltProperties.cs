@@ -39,6 +39,10 @@ public class BoltProperties : NetworkBehaviour {
         RPC_GrabBolt();
     }
 
+    public void release() {
+        RPC_ReleaseBolt();
+    }
+
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_GrabBolt() {
 
@@ -47,7 +51,7 @@ public class BoltProperties : NetworkBehaviour {
 
         // Debug.Log(this.GetComponent<NetworkHandColliderGrabbable>().);
         GetComponent<NetworkObject>().AssignInputAuthority(Runner.LocalPlayer);
-        //GetComponent<NetworkObject>().RequestStateAuthority();
+        GetComponent<NetworkObject>().RequestStateAuthority();
         Debug.Log(Runner.LocalPlayer);
         Debug.Log(GetComponent<NetworkObject>().HasInputAuthority);
         Debug.Log(GetComponent<NetworkObject>().InputAuthority);
@@ -64,6 +68,18 @@ public class BoltProperties : NetworkBehaviour {
             // For example: GameManager.Instance.MadeError();
         }
         //Runner.Despawn(Object);
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RPC_ReleaseBolt() {
+
+        Debug.Log("released any bolt!");
+        // Debug.Log(this.GetComponent<Fusion.XR.Shared.Grabbing.NetworkGrabbable>().IsGrabbed);
+
+        // Debug.Log(this.GetComponent<NetworkHandColliderGrabbable>().);
+        //<NetworkObject>().AssignInputAuthority(Runner.LocalPlayer);
+        GetComponent<NetworkObject>().ReleaseStateAuthoirty();
+
     }
 
     public  void OnCollisionEnter(Collision collision) {
