@@ -54,6 +54,7 @@ namespace Fusion.Addons.ConnectionManagerAddon
 
         [Header("Local user spawner")]
         public NetworkObject userPrefab;
+        public GameObject rig;
 
 #region IUserSpawner
         public NetworkObject UserPrefab { 
@@ -192,6 +193,7 @@ namespace Fusion.Addons.ConnectionManagerAddon
         {
             if (player == runner.LocalPlayer && userPrefab != null)
             {
+                rig.transform.position = new Vector3(rig.transform.position.x, rig.transform.position.y, rig.transform.position.z + 2);
                 // Spawn the user prefab for the local user
                 NetworkObject networkPlayerObject = runner.Spawn(userPrefab, position: transform.position, rotation: transform.rotation, player, (runner, obj) => {
                 });

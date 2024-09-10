@@ -127,6 +127,10 @@ namespace Fusion.XR.Shared.Desktop
         {
             gameObject.SetActive(false);
             vrRig.gameObject.SetActive(true);
+       
+            //vrRig.gameObject.transform.Translate(new Vector3(0,0,2));
+           // vrRig.gameObject.transform.position = new Vector3(0, 0, 2);
+
             SetVRPreference();
             OnRigSelected();
         }
