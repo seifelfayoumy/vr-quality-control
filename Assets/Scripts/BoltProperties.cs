@@ -79,6 +79,7 @@ public class BoltProperties : NetworkBehaviour {
         // Debug.Log(this.GetComponent<NetworkHandColliderGrabbable>().);
         //<NetworkObject>().AssignInputAuthority(Runner.LocalPlayer);
         //GetComponent<NetworkObject>().ReleaseStateAuthoirty();
+        OnConveyor = false;
 
     }
 
