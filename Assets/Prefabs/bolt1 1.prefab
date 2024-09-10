@@ -92,7 +92,7 @@ PrefabInstance:
       addedObject: {fileID: -414367315290358704}
     - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 3c0e53109cded4799b30b692e5f33e6b, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -2572958353584405030}
+      addedObject: {fileID: 2283696373338437507}
   m_SourcePrefab: {fileID: 100100000, guid: 3c0e53109cded4799b30b692e5f33e6b, type: 3}
 --- !u!1 &3118111551681423224 stripped
 GameObject:
@@ -344,7 +344,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: -6830705230653571105}
   - {fileID: -414367315290358704}
-  - {fileID: -2572958353584405030}
+  - {fileID: 2283696373338437507}
 --- !u!114 &-6830705230653571105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -392,7 +392,7 @@ MonoBehaviour:
       m_Calls: []
   extrapolateWhileTakingAuthority: 1
   isTakingAuthority: 0
---- !u!114 &-2572958353584405030
+--- !u!114 &2283696373338437507
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -401,16 +401,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3118111551681423224}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a591d221a634417e9827eb58e17de84, type: 3}
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SyncScale: 0
-  SyncParent: 1
-  _interpolationTarget: {fileID: 0}
-  UsePreciseRotation: 0
-  UseRenderSleepThresholds: 1
-  RenderThresholds:
-    UseEnergy: 1
-    Position: 0.01
-    Rotation: 0.01
-    Scale: 0.01
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0

@@ -7,15 +7,9 @@ public class BoltProperties : NetworkBehaviour {
     [Networked] public NetworkBool OnConveyor { get; set; }
 
     private MeshRenderer meshRenderer;
-    private NetworkRigidbody networkRigidbody;
-    private Rigidbody rb;
-    private Vector3 lastPosition;
-    private float releaseVelocityMultiplier = 1f; // Adjust this value to control release velocity
 
     public override void Spawned() {
         meshRenderer = GetComponent<MeshRenderer>();
-        networkRigidbody = GetComponent<NetworkRigidbody>();
-        rb = GetComponent<Rigidbody>();
         UpdateVisuals();
     }
 
@@ -27,11 +21,8 @@ public class BoltProperties : NetworkBehaviour {
 
     public override void FixedUpdateNetwork() {
         if (OnConveyor) {
-            rb.MovePosition(rb.position + Vector3.right * ConveyorSpeed * Runner.DeltaTime);
+            this.transform.Translate(Vector3.right * ConveyorSpeed * Runner.DeltaTime);
         }
-
-        // Store the current position for velocity calculation
-        lastPosition = transform.position;
     }
 
     public override void Render() {
@@ -54,29 +45,41 @@ public class BoltProperties : NetworkBehaviour {
 
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_GrabBolt() {
-        Debug.Log("Grabbed bolt");
-        Object.RequestStateAuthority();
-        if (!Object.HasStateAuthority) return;
 
-        rb.isKinematic = true;
-        networkRigidbody.GetComponent<Rigidbody>().isKinematic = true;
+        Debug.Log("Grabbed any bolt!");
+        // Debug.Log(this.GetComponent<Fusion.XR.Shared.Grabbing.NetworkGrabbable>().IsGrabbed);
+
+        // Debug.Log(this.GetComponent<NetworkHandColliderGrabbable>().);
+        GetComponent<NetworkObject>().AssignInputAuthority(Runner.LocalPlayer);
+        GetComponent<NetworkObject>().RequestStateAuthority();
+        Debug.Log(Runner.LocalPlayer);
+        Debug.Log(GetComponent<NetworkObject>().HasInputAuthority);
+        Debug.Log(GetComponent<NetworkObject>().InputAuthority);
+        Debug.Log(GetComponent<NetworkObject>().HasStateAuthority);
+        Debug.Log(GetComponent<NetworkObject>().StateAuthority);
+
+
+
+
+        if (!IsGold) {
+            // Handle error logic here
+            Debug.Log("Grabbed silver bolt - Error!");
+            // You might want to call a method on a manager object to handle the error
+            // For example: GameManager.Instance.MadeError();
+        }
+        //Runner.Despawn(Object);
     }
 
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_ReleaseBolt() {
-        Debug.Log("Released bolt");
-        if (!Object.HasStateAuthority) return;
 
+        Debug.Log("released any bolt!");
+        // Debug.Log(this.GetComponent<Fusion.XR.Shared.Grabbing.NetworkGrabbable>().IsGrabbed);
 
-        rb.isKinematic = false;
-        networkRigidbody.GetComponent<Rigidbody>().isKinematic = false;
+        // Debug.Log(this.GetComponent<NetworkHandColliderGrabbable>().);
+        //<NetworkObject>().AssignInputAuthority(Runner.LocalPlayer);
+        GetComponent<NetworkObject>().ReleaseStateAuthoirty();
 
-        // Calculate release velocity based on recent movement
-        Vector3 releaseVelocity = (transform.position - lastPosition) / Runner.DeltaTime * releaseVelocityMultiplier;
-        rb.velocity = releaseVelocity;
-        networkRigidbody.GetComponent<Rigidbody>().velocity = releaseVelocity;
-
-        Object.ReleaseStateAuthoirty();
     }
 
     public void OnCollisionEnter(Collision collision) {
