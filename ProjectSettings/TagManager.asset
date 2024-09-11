@@ -9,6 +9,7 @@ TagManager:
   - FxTemporaire
   - Conveyor
   - Bolt
+  - Wall
   layers:
   - Default
   - TransparentFX

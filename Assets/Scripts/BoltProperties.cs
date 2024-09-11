@@ -5,6 +5,7 @@ public class BoltProperties : NetworkBehaviour {
     [Networked] public NetworkBool IsGold { get; set; }
     [Networked] public float ConveyorSpeed { get; set; }
     [Networked] public NetworkBool OnConveyor { get; set; }
+    private BoltSpawnerNetwork boltSpawner;
 
     private MeshRenderer meshRenderer;
 
@@ -65,6 +66,7 @@ public class BoltProperties : NetworkBehaviour {
         if (!IsGold) {
             // Handle error logic here
             Debug.Log("Grabbed silver bolt - Error!");
+            boltSpawner.RPC_incrementErrors();
             // You might want to call a method on a manager object to handle the error
             // For example: GameManager.Instance.MadeError();
         }
@@ -88,6 +90,11 @@ public class BoltProperties : NetworkBehaviour {
         if (collision.gameObject.CompareTag("Conveyor")) {
             OnConveyor = true;
         }
+        if (collision.gameObject.CompareTag("Wall")) {
+            if (!IsGold) {
+                boltSpawner.RPC_incrementSilverBolts();
+            }
+        }
     }
 
     public void OnCollisionExit(Collision collision) {
@@ -95,4 +102,5 @@ public class BoltProperties : NetworkBehaviour {
             OnConveyor = false;
         }
     }
+
 }
