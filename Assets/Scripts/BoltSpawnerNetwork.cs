@@ -24,8 +24,24 @@ public class BoltSpawnerNetwork : NetworkBehaviour {
     }
 
     public override void FixedUpdateNetwork() {
-        if (HasStateAuthority && gameOn) {
+        if (HasStateAuthority) {
             totalTime += Runner.DeltaTime;
+
+            if (totalTime > 83f) {
+                RPC_StartGame(GameMode.Stop);
+            } else if (totalTime > 58f) {
+                RPC_StartGame(GameMode.Hard);
+
+            } else if (totalTime > 55f) {
+                RPC_StartGame(GameMode.Stop);
+            } else if (totalTime > 30f) {
+                RPC_StartGame(GameMode.Medium);
+            } else if (totalTime > 25f) {
+                RPC_StartGame(GameMode.Stop);
+            }
+
+
+            //RPC_StartGame(GameMode.Hard);
 
             if (spawnTimer.Expired(Runner)) {
                 SpawnBolt();
@@ -36,24 +52,31 @@ public class BoltSpawnerNetwork : NetworkBehaviour {
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     public void RPC_StartGame(GameMode mode) {
-        gameOn = true;
+       
         switch (mode) {
+            case GameMode.Stop:
+                gameOn = false;
+                break;
             case GameMode.Easy:
+                gameOn = true;
                 currentConveyorSpeed = 0.6f;
                 doubleBolts = false;
                 tripleBolts = false;
                 break;
             case GameMode.Medium:
-                currentConveyorSpeed = 0.8f;
+                gameOn = true;
+                currentConveyorSpeed = 1.0f;
                 doubleBolts = true;
                 tripleBolts = false;
                 break;
             case GameMode.Hard:
+                gameOn = true;
                 currentConveyorSpeed = 1.4f;
                 doubleBolts = true;
                 tripleBolts = true;
                 break;
             case GameMode.VeryHard:
+                gameOn = true;
                 currentConveyorSpeed = 1.7f;
                 doubleBolts = true;
                 tripleBolts = true;
@@ -62,13 +85,23 @@ public class BoltSpawnerNetwork : NetworkBehaviour {
     }
 
     void SpawnBolt() {
+        if (gameOn) {
+
+        
         Vector3 position1 = new Vector3(spawnPoint.position.x, spawnPoint.position.y, -0.75f);
         Vector3 position2 = new Vector3(-6.6f, spawnPoint.position.y, -1.2f);
         Vector3 position3 = new Vector3(-6.9f, spawnPoint.position.y, -0.75f);
+        Vector3 position4 = new Vector3(-7.5f, spawnPoint.position.y, -1.2f);
+
 
         SpawnBoltAtPosition(position1);
-        if (doubleBolts) SpawnBoltAtPosition(position2);
-        if (tripleBolts) SpawnBoltAtPosition(position3);
+        SpawnBoltAtPosition(position2);
+        // if (doubleBolts) SpawnBoltAtPosition(position2);
+        if (tripleBolts) {
+            SpawnBoltAtPosition(position3);
+            SpawnBoltAtPosition(position4);
+        }
+        }
     }
 
     void SpawnBoltAtPosition(Vector3 position) {
@@ -90,5 +123,6 @@ public enum GameMode {
     Easy,
     Medium,
     Hard,
-    VeryHard
+    VeryHard,
+    Stop
 }

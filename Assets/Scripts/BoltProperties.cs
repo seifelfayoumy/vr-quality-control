@@ -23,6 +23,7 @@ public class BoltProperties : NetworkBehaviour {
         if (OnConveyor) {
             this.transform.Translate(Vector3.right * ConveyorSpeed * Runner.DeltaTime);
         }
+        
     }
 
     public override void Render() {
