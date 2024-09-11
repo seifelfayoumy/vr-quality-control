@@ -24,21 +24,21 @@ public class BoltSpawnerNetwork : NetworkBehaviour {
     }
 
     public override void FixedUpdateNetwork() {
-        if (HasStateAuthority) {
+        if (HasStateAuthority  && gameOn) {
             totalTime += Runner.DeltaTime;
+            
+           // if (totalTime > 83f) {
+            //    RPC_StartGame(GameMode.Stop);
+           // } else if (totalTime > 58f) {
+           //     RPC_StartGame(GameMode.Hard);
 
-            if (totalTime > 83f) {
-                RPC_StartGame(GameMode.Stop);
-            } else if (totalTime > 58f) {
-                RPC_StartGame(GameMode.Hard);
-
-            } else if (totalTime > 55f) {
-                RPC_StartGame(GameMode.Stop);
-            } else if (totalTime > 30f) {
-                RPC_StartGame(GameMode.Medium);
-            } else if (totalTime > 25f) {
-                RPC_StartGame(GameMode.Stop);
-            }
+           // } else if (totalTime > 55f) {
+           //     RPC_StartGame(GameMode.Stop);
+           // } else if (totalTime > 30f) {
+           //     RPC_StartGame(GameMode.Medium);
+          //  } else if (totalTime > 25f) {
+          //      RPC_StartGame(GameMode.Stop);
+          //  }
 
 
             //RPC_StartGame(GameMode.Hard);
