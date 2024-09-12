@@ -86,7 +86,7 @@ public class BoltSpawnerNetwork : NetworkBehaviour {
         //  Debug.Log("errors made by user: " + errorsMadeByUser);
         //  Debug.Log("silver bolts count: " + silverBoltsCount);
 
-        scoreText.SetActive(true);
+      //  scoreText.SetActive(true);
         if (silverBoltsCount > 0) {
             score = Mathf.Clamp(((silverBoltsPassed - errorsMadeByUser) / silverBoltsCount) * 100.0f, 0f, 100f);
         } else {
