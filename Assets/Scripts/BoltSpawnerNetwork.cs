@@ -1,6 +1,8 @@
 using Fusion;
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
+
 
 public class BoltSpawnerNetwork : NetworkBehaviour {
     public Transform spawnPoint;
@@ -21,15 +23,16 @@ public class BoltSpawnerNetwork : NetworkBehaviour {
 
     [Networked] public float totalTime { get; set; }
 
- 
+    public GameObject scoreText;
+
 
 
     private TickTimer spawnTimer;
 
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_incrementErrors() {
-       // if (Object.HasStateAuthority) {
-
+        // if (Object.HasStateAuthority) {
+        Debug.LogWarning("incrementing error");
 
             errorsMadeByUser += 1.0f;
        // }
@@ -37,8 +40,10 @@ public class BoltSpawnerNetwork : NetworkBehaviour {
 
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_incrementSilverBolts() {
-       // if (Object.HasStateAuthority) {
-            silverBoltsPassed += 1.0f;
+        // if (Object.HasStateAuthority) {
+        Debug.LogWarning("incrementing silver");
+
+        silverBoltsPassed += 1.0f;
       //  }
       
     }
@@ -56,6 +61,8 @@ public class BoltSpawnerNetwork : NetworkBehaviour {
             
             if (totalTime > 85f) {
                 RPC_StartGame(GameMode.Stop);
+                scoreText.SetActive(true);
+
             } else if (totalTime > 60f) {
                 RPC_StartGame(GameMode.Hard);
 
@@ -75,11 +82,23 @@ public class BoltSpawnerNetwork : NetworkBehaviour {
                 spawnTimer = TickTimer.CreateFromSeconds(Runner, spawnDelay);
             }
         }
-     //   Debug.Log("silver bolts passed: "+silverBoltsPassed);
-      //  Debug.Log("errors made by user: " + errorsMadeByUser);
-      //  Debug.Log("silver bolts count: " + silverBoltsCount);
+        //   Debug.Log("silver bolts passed: "+silverBoltsPassed);
+        //  Debug.Log("errors made by user: " + errorsMadeByUser);
+        //  Debug.Log("silver bolts count: " + silverBoltsCount);
 
-        score = ((silverBoltsPassed - errorsMadeByUser) / silverBoltsCount) * 100.0f;
+        scoreText.SetActive(true);
+        if (silverBoltsCount > 0) {
+            score = Mathf.Clamp(((silverBoltsPassed - errorsMadeByUser) / silverBoltsCount) * 100.0f, 0f, 100f);
+        } else {
+            score = 0f;
+        }
+
+        
+
+    }
+
+    public void Update() {
+        scoreText.GetComponent<TextMeshProUGUI>().text = $"Score: {score:F2}%";
 
     }
 
@@ -144,6 +163,7 @@ public class BoltSpawnerNetwork : NetworkBehaviour {
             if (boltProps != null) {
                 bool isGold = Random.value < 0.35f;
                 boltProps.Initialize(isGold, currentConveyorSpeed);
+                boltProps.SetBoltSpawner(this);
                 if (!isGold) {
                     silverBoltsCount += 1;
                 }

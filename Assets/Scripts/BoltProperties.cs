@@ -9,6 +9,10 @@ public class BoltProperties : NetworkBehaviour {
 
     private MeshRenderer meshRenderer;
 
+    public void SetBoltSpawner(BoltSpawnerNetwork spawner) {
+        boltSpawner = spawner;
+    }
+
     public override void Spawned() {
         meshRenderer = GetComponent<MeshRenderer>();
         UpdateVisuals();
@@ -66,6 +70,8 @@ public class BoltProperties : NetworkBehaviour {
         if (!IsGold) {
             // Handle error logic here
             Debug.Log("Grabbed silver bolt - Error!");
+            Debug.LogWarning("try incrementing error");
+
             boltSpawner.RPC_incrementErrors();
             // You might want to call a method on a manager object to handle the error
             // For example: GameManager.Instance.MadeError();
@@ -90,8 +96,15 @@ public class BoltProperties : NetworkBehaviour {
         if (collision.gameObject.CompareTag("Conveyor")) {
             OnConveyor = true;
         }
+
+    }
+
+    public void OnTriggerEnter(Collider collision) {
         if (collision.gameObject.CompareTag("Wall")) {
+            Debug.LogWarning("hitingggg");
             if (!IsGold) {
+                Debug.LogWarning("try incrementing silver");
+
                 boltSpawner.RPC_incrementSilverBolts();
             }
         }
