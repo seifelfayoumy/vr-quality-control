@@ -26,7 +26,8 @@ public class BoltProperties : NetworkBehaviour {
 
     public override void FixedUpdateNetwork() {
         if (OnConveyor) {
-            this.transform.Translate(Vector3.right * ConveyorSpeed * Runner.DeltaTime);
+            // this.transform.Translate(Vector3.right * ConveyorSpeed * Runner.DeltaTime);
+            transform.position += (Vector3.right * ConveyorSpeed * Runner.DeltaTime);
         }
         
     }
