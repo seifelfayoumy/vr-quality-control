@@ -98,7 +98,10 @@ public class BoltSpawnerNetwork : NetworkBehaviour {
     }
 
     public void Update() {
-        scoreText.GetComponent<TextMeshProUGUI>().text = $"Score: {score:F2}%";
+        if (totalTime > 95.0f) {
+            scoreText.GetComponent<TextMeshProUGUI>().text = $"Score: {score:F2}%";
+
+        }
 
     }
 

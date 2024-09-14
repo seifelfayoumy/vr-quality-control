@@ -130,7 +130,7 @@ public class ConveyorSpeedManager : MonoBehaviour
         score = ((silverBoltsPassed - errorsMadeByUser) / BoltSpawner.silverBoltsCount)*100.0f;
 
 
-        scoreText.GetComponent<TextMeshProUGUI>().text =  "Score: " + score;
+       // scoreText.GetComponent<TextMeshProUGUI>().text =  "Score: " + score;
     }
 
 
