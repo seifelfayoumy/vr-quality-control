@@ -61,7 +61,7 @@ public class BoltSpawnerNetwork : NetworkBehaviour {
             
             if (totalTime > 85f) {
                 RPC_StartGame(GameMode.Stop);
-                scoreText.SetActive(true);
+               // scoreText.SetActive(true);
 
             } else if (totalTime > 60f) {
                 RPC_StartGame(GameMode.Hard);
