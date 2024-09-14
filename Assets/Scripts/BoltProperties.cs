@@ -70,9 +70,9 @@ public class BoltProperties : NetworkBehaviour {
         if (!IsGold) {
             // Handle error logic here
             Debug.Log("Grabbed silver bolt - Error!");
-            Debug.LogWarning("try incrementing error");
+           // Debug.LogWarning("try incrementing error");
 
-            boltSpawner.RPC_incrementErrors();
+            
             // You might want to call a method on a manager object to handle the error
             // For example: GameManager.Instance.MadeError();
         }
@@ -106,6 +106,9 @@ public class BoltProperties : NetworkBehaviour {
                 Debug.LogWarning("try incrementing silver");
 
                 boltSpawner.RPC_incrementSilverBolts();
+            } else {
+                Debug.LogWarning("try incrementing error");
+                boltSpawner.RPC_incrementErrors();
             }
         }
     }
